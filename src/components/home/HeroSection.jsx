@@ -82,14 +82,16 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Heading with Typing Animation */}
-        <motion.h1
-          variants={itemVariants}
-          className="font-display text-3xl sm:text-5xl md:text-6xl font-bold text-on-background leading-[1.2] max-w-4xl mx-auto min-h-[90px] sm:min-h-[130px] md:min-h-[160px] flex items-center justify-center flex-wrap"
-        >
-          <span>{currentText}</span>
-          <span className="inline-block text-primary animate-pulse font-normal ml-1 select-none">|</span>
-        </motion.h1>
+        {/* Heading with Typing Animation (Fixed height wrapper to prevent layout shifting) */}
+        <div className="h-[90px] sm:h-[130px] md:h-[160px] flex items-center justify-center overflow-hidden">
+          <motion.h1
+            variants={itemVariants}
+            className="font-display text-3xl sm:text-5xl md:text-6xl font-bold text-on-background leading-[1.2] max-w-4xl mx-auto"
+          >
+            <span>{currentText}</span>
+            <span className="inline-block text-primary animate-pulse font-normal ml-1 select-none">|</span>
+          </motion.h1>
+        </div>
 
         {/* Subtitle */}
         <motion.p
