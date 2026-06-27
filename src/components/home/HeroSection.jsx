@@ -1,7 +1,49 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 export default function HeroSection() {
+  const titles = [
+    "Enkripsi Bukan Lagi Kotak Hitam.",
+    "Visualisasikan Aliran Data AES-128.",
+    "Kupas Tuntas Struktur Kriptografi."
+  ];
+
+  const [currentText, setCurrentText] = useState("");
+  const [titleIndex, setTitleIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(80);
+
+  useEffect(() => {
+    let timer;
+    const currentTitle = titles[titleIndex];
+
+    if (!isDeleting) {
+      timer = setTimeout(() => {
+        setCurrentText(currentTitle.slice(0, currentText.length + 1));
+        setTypingSpeed(80);
+      }, typingSpeed);
+
+      if (currentText === currentTitle) {
+        setIsDeleting(true);
+        setTypingSpeed(2500); // Pause for 2.5s when fully typed
+      }
+    } else {
+      timer = setTimeout(() => {
+        setCurrentText(currentTitle.slice(0, currentText.length - 1));
+        setTypingSpeed(35); // Deleting is twice as fast
+      }, typingSpeed);
+
+      if (currentText === "") {
+        setIsDeleting(false);
+        setTitleIndex((prev) => (prev + 1) % titles.length);
+        setTypingSpeed(400); // Small pause before typing next word
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [currentText, isDeleting, titleIndex, typingSpeed]);
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -40,12 +82,13 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Heading */}
+        {/* Heading with Typing Animation */}
         <motion.h1
           variants={itemVariants}
-          className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-on-background leading-[1.1] max-w-4xl mx-auto"
+          className="font-display text-3xl sm:text-5xl md:text-6xl font-bold text-on-background leading-[1.2] max-w-4xl mx-auto min-h-[90px] sm:min-h-[130px] md:min-h-[160px] flex items-center justify-center flex-wrap"
         >
-          Enkripsi Dulunya Sebuah<br className="hidden sm:inline" /> Kotak Hitam.
+          <span>{currentText}</span>
+          <span className="inline-block text-primary animate-pulse font-normal ml-1 select-none">|</span>
         </motion.h1>
 
         {/* Subtitle */}
