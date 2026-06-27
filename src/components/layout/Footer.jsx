@@ -12,7 +12,7 @@ export default function Footer() {
             </span>
             <span className="hidden sm:inline text-on-surface-variant/40">|</span>
             <span className="text-[11px] sm:text-xs">
-              © 2024 CipherFlow Academic. Dirancang untuk kejelasan kriptografis.
+              © 2026 CipherFlow Academic. Project Pertemuan 13 - Advanced Encryption Standard (AES).
             </span>
           </div>
 

@@ -123,7 +123,7 @@ export default function HeroSection() {
           <div className="bg-gradient-to-br from-[#dfcbba] via-[#f7ebd9] to-[#ebd7c5] 
                         dark:from-[#2a1f18] dark:via-[#36271c] dark:to-[#221711] 
                         rounded-3xl p-8 md:p-12 relative overflow-hidden shadow-2xl border border-outline-variant/40 min-h-[300px] sm:min-h-[380px] flex items-center justify-center">
-            
+
             {/* Elegant Flowing Ribbon Waves (SVG) */}
             <div className="absolute inset-0 z-0">
               <svg viewBox="0 0 800 400" className="w-full h-full object-cover opacity-80" preserveAspectRatio="none">
@@ -140,10 +140,10 @@ export default function HeroSection() {
                     <stop offset="100%" stopColor="#9c7247" stopOpacity="0.7" />
                   </linearGradient>
                   <filter id="glow">
-                    <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                    <feGaussianBlur stdDeviation="8" result="coloredBlur" />
                     <feMerge>
-                      <feMergeNode in="coloredBlur"/>
-                      <feMergeNode in="SourceGraphic"/>
+                      <feMergeNode in="coloredBlur" />
+                      <feMergeNode in="SourceGraphic" />
                     </feMerge>
                   </filter>
                 </defs>
@@ -192,9 +192,9 @@ export default function HeroSection() {
 
             {/* Interactive Float Containers for Glass Orbs */}
             <div className="relative z-10 flex items-center justify-around w-full max-w-2xl px-4 flex-wrap gap-8 sm:gap-12">
-              
+
               {/* Left Sphere - Closed Lock */}
-              <motion.div 
+              <motion.div
                 className="text-center"
                 animate={{ y: [0, -15, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
@@ -206,9 +206,9 @@ export default function HeroSection() {
                   {/* Internal glare effect */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/40 pointer-events-none" />
                   <div className="absolute top-1 left-2 w-10 h-6 bg-white/20 rounded-full blur-[2px] rotate-[-20deg]" />
-                  
+
                   {/* Floating Lock Icon */}
-                  <motion.span 
+                  <motion.span
                     className="material-symbols-outlined text-white text-4xl sm:text-5xl drop-shadow-[0_4px_10px_rgba(0,0,0,0.25)] select-none"
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
@@ -224,7 +224,7 @@ export default function HeroSection() {
               </motion.div>
 
               {/* Right Sphere - Open Lock */}
-              <motion.div 
+              <motion.div
                 className="text-center"
                 animate={{ y: [-15, 0, -15] }}
                 transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
@@ -236,9 +236,9 @@ export default function HeroSection() {
                   {/* Internal glare effect */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/40 pointer-events-none" />
                   <div className="absolute top-1 left-2 w-10 h-6 bg-white/20 rounded-full blur-[2px] rotate-[-20deg]" />
-                  
+
                   {/* Floating Lock Open Icon */}
-                  <motion.span 
+                  <motion.span
                     className="material-symbols-outlined text-white text-4xl sm:text-5xl drop-shadow-[0_4px_10px_rgba(0,0,0,0.25)] select-none"
                     animate={{ scale: [1.05, 1, 1.05] }}
                     transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
