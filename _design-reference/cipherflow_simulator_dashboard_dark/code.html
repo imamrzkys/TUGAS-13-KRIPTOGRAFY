@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CipherFlow | AES-128 Simulator Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "outline": "#a08d80",
+                "on-primary-container": "#542900",
+                "error-container": "#93000a",
+                "on-secondary-fixed-variant": "#0c3da9",
+                "surface-dim": "#161311",
+                "surface-variant": "#393431",
+                "secondary-fixed": "#dce1ff",
+                "on-secondary": "#00287c",
+                "primary-container": "#d98b4a",
+                "primary-fixed": "#ffdcc4",
+                "outline-variant": "#534439",
+                "on-primary": "#4e2600",
+                "secondary-container": "#113fab",
+                "primary-fixed-dim": "#ffb77f",
+                "on-secondary-container": "#a1b5ff",
+                "on-tertiary-container": "#003c36",
+                "inverse-on-surface": "#342f2d",
+                "primary": "#ffb77f",
+                "on-tertiary": "#003732",
+                "on-surface-variant": "#d8c2b4",
+                "tertiary": "#66d9cc",
+                "on-secondary-fixed": "#00164e",
+                "surface-container-low": "#1f1b19",
+                "surface-container-lowest": "#110d0c",
+                "on-error": "#690005",
+                "tertiary-container": "#33aea2",
+                "surface-bright": "#3d3836",
+                "on-error-container": "#ffdad6",
+                "tertiary-fixed": "#84f5e8",
+                "on-tertiary-fixed": "#00201d",
+                "surface": "#161311",
+                "on-tertiary-fixed-variant": "#005049",
+                "inverse-surface": "#eae1dd",
+                "on-background": "#eae1dd",
+                "inverse-primary": "#8e4e10",
+                "on-primary-fixed": "#2f1500",
+                "surface-container-high": "#2e2927",
+                "secondary-fixed-dim": "#b5c4ff",
+                "secondary": "#b5c4ff",
+                "surface-tint": "#ffb77f",
+                "on-surface": "#eae1dd",
+                "on-primary-fixed-variant": "#6f3800",
+                "tertiary-fixed-dim": "#66d9cc",
+                "background": "#161311",
+                "surface-container-highest": "#393431",
+                "surface-container": "#231f1d",
+                "error": "#ffb4ab"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "margin": "24px",
+                "gutter": "16px",
+                "md": "16px",
+                "lg": "24px",
+                "base": "4px",
+                "sm": "8px",
+                "xs": "4px",
+                "xl": "40px"
+            },
+            "fontFamily": {
+                "label-sm": ["JetBrains Mono"],
+                "headline-lg": ["Geist"],
+                "body-lg": ["Geist"],
+                "body-md": ["Geist"],
+                "headline-md": ["Geist"],
+                "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                "label-sm": ["10px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(36, 32, 25, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid #2F2A24;
+        }
+        .matrix-cell {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .matrix-cell:hover {
+            border-color: #D98B4A;
+            box-shadow: 0 0 15px rgba(217, 139, 74, 0.2);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary/30 min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface sticky top-0 z-50 border-b border-outline-variant">
+<div class="flex justify-between items-center px-lg py-md w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-xl">
+<span class="font-headline-md text-headline-md font-bold text-primary">CipherFlow</span>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">How It Works</a>
+<a class="text-primary font-bold border-b-2 border-primary font-body-md" href="#">Simulator</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-variant transition-transform active:scale-90">
+<span class="material-symbols-outlined text-primary">dark_mode</span>
+</button>
+<button class="bg-primary-container text-on-primary-container px-lg py-sm rounded-lg font-bold hover:opacity-90 transition-transform active:scale-95">
+                    Try Simulator
+                </button>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] bg-surface-container border-r border-outline-variant flex flex-col pt-[72px] z-40 hidden lg:flex">
+<div class="px-lg py-md border-b border-outline-variant/30">
+<h2 class="font-headline-sm text-headline-sm text-primary">AES-128 Process</h2>
+<p class="font-label-sm text-outline">Cryptographic Rounds</p>
+</div>
+<nav class="flex-1 overflow-y-auto scrollbar-hide py-md space-y-1">
+<!-- Round Items -->
+<div class="px-md">
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">vpn_key</span>
+<span class="font-label-md">Key Expansion</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">start</span>
+<span class="font-label-md">Initial Round</span>
+</a>
+<!-- Rounds 1-6 Simplified for brevity in layout -->
+<div class="h-[1px] bg-outline-variant/20 my-2"></div>
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">looks_one</span>
+<span class="font-label-md text-label-md">Round 1</span>
+</a>
+<!-- ... -->
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">looks_6</span>
+<span class="font-label-md text-label-md">Round 6</span>
+</a>
+<!-- Explicit Rounds 7, 8, 9 -->
+<a class="flex items-center gap-md px-md py-3 rounded-lg bg-secondary-container text-on-secondary-container border-l-4 border-on-secondary-fixed-variant transition-all" href="#">
+<span class="material-symbols-outlined">looks_3</span>
+<span class="font-label-md text-label-md">Round 7</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">looks_3</span>
+<span class="font-label-md text-label-md">Round 8</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">looks_3</span>
+<span class="font-label-md text-label-md">Round 9</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">key_visualizer</span>
+<span class="font-label-md text-label-md">Round 10</span>
+</a>
+</div>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 lg:ml-[280px] p-lg flex flex-col md:flex-row gap-lg">
+<!-- Left Panel: Input Form -->
+<div class="w-full md:w-[360px] flex flex-col gap-lg">
+<div class="glass-panel p-lg rounded-xl shadow-2xl flex flex-col gap-md">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-headline-md text-primary">Parameters</h3>
+<span class="material-symbols-outlined text-outline">settings_ethernet</span>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block font-label-md text-outline mb-2">PLAINTEXT (HEX)</label>
+<input class="w-full bg-background border border-outline-variant rounded-lg px-md py-3 font-label-md text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" type="text" value="32 43 F6 A8 88 5A 30 8D"/>
+</div>
+<div>
+<label class="block font-label-md text-outline mb-2">CIPHER KEY</label>
+<input class="w-full bg-background border border-outline-variant rounded-lg px-md py-3 font-label-md text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" type="password" value="2B 7E 15 16 28 AE D2 A6"/>
+</div>
+<div class="flex items-center gap-md pt-2">
+<div class="flex-1 flex bg-surface-container rounded-lg p-1">
+<button class="flex-1 py-2 text-on-primary-container bg-primary-container rounded-md font-bold text-label-md">ENCRYPT</button>
+<button class="flex-1 py-2 text-outline font-bold text-label-md">DECRYPT</button>
+</div>
+</div>
+<button class="w-full py-4 bg-tertiary-container text-on-tertiary-container font-bold rounded-lg hover:opacity-90 transition-all active:scale-95 flex items-center justify-center gap-2 mt-4 shadow-lg shadow-tertiary/10">
+<span class="material-symbols-outlined">bolt</span>
+                            RUN SIMULATION
+                        </button>
+</div>
+</div>
+<!-- Laboratory Insight Card -->
+<div class="glass-panel p-lg rounded-xl flex flex-col gap-sm border-l-4 border-tertiary">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-tertiary">biotech</span>
+<h4 class="font-label-md font-bold uppercase tracking-wider text-tertiary">Laboratory Insight</h4>
+</div>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                        Round 7 observes the diffusion phase where <span class="text-tertiary">MixColumns</span> transforms the state matrix to provide high confusion. Each column is treated as a polynomial over GF(2^8).
+                    </p>
+</div>
+</div>
+<!-- Main Area: 4x4 State Matrix -->
+<div class="flex-1 flex flex-col gap-lg h-full">
+<div class="flex items-end justify-between">
+<div>
+<h2 class="font-headline-lg text-on-surface">State Matrix Visualization</h2>
+<p class="text-outline font-body-md">Active Process: SubBytes | Round 7</p>
+</div>
+<div class="flex gap-2">
+<span class="bg-surface-container-high px-3 py-1 rounded text-label-sm border border-outline-variant">HEXADECIMAL</span>
+<span class="bg-surface-container-high px-3 py-1 rounded text-label-sm border border-outline-variant">GF(2^8)</span>
+</div>
+</div>
+<div class="flex-1 glass-panel rounded-xl p-lg relative overflow-hidden flex items-center justify-center">
+<!-- Background Shader Effect Placeholder -->
+
+<div class="grid grid-cols-4 grid-rows-4 gap-md w-full max-w-[600px] aspect-square relative z-10">
+<!-- Matrix Cells (16 units) -->
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">D4</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">E0</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group outline outline-2 outline-tertiary/40">
+<span class="font-label-md text-headline-md text-tertiary font-bold">B8</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">1E</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">27</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">BF</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">B4</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group outline outline-2 outline-primary/40">
+<span class="font-label-md text-headline-md text-primary font-bold">41</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">11</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">98</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">5D</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">52</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">AE</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">F1</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">E5</span>
+</div>
+<div class="matrix-cell bg-[#2A2520] border border-outline-variant/30 flex items-center justify-center rounded-lg shadow-inner group">
+<span class="font-label-md text-headline-md text-on-surface group-hover:text-primary">30</span>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex items-center gap-md">
+<button class="px-lg py-3 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-variant transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">skip_previous</span>
+                        Step Back
+                    </button>
+<button class="px-lg py-3 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-variant transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">pause</span>
+                        Pause
+                    </button>
+<button class="px-lg py-3 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-variant transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">skip_next</span>
+                        Step Forward
+                    </button>
+<div class="flex-1 h-[2px] bg-outline-variant/30 relative">
+<div class="absolute left-0 top-0 h-full w-[70%] bg-primary shadow-sm shadow-primary/50"></div>
+</div>
+<span class="font-label-md text-primary">70% COMPLETE</span>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant w-full mt-auto">
+<div class="w-full py-lg px-xl flex justify-between items-center max-w-7xl mx-auto">
+<span class="font-label-sm text-outline">© 2024 CipherFlow Academic. All Rights Reserved.</span>
+<div class="flex items-center gap-lg">
+<a class="font-label-sm text-outline hover:text-on-surface-variant transition-opacity opacity-80 hover:opacity-100" href="#">Documentation</a>
+<a class="font-label-sm text-outline hover:text-on-surface-variant transition-opacity opacity-80 hover:opacity-100" href="#">Methodology</a>
+<a class="font-label-sm text-outline hover:text-on-surface-variant transition-opacity opacity-80 hover:opacity-100" href="#">Privacy</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions for the matrix cells
+        document.querySelectorAll('.matrix-cell').forEach(cell => {
+            cell.addEventListener('mousedown', () => {
+                cell.style.transform = 'scale(0.95)';
+            });
+            cell.addEventListener('mouseup', () => {
+                cell.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simulating some state change for the insight card
+        const insightText = document.querySelector('.glass-panel p');
+        let roundCounter = 7;
+        
+        // This script is purely for visual demonstration of the interactive nature
+        console.log("CipherFlow Simulator Initialized.");
+    </script>
+</body></html>

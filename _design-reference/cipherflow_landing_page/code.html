@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CipherFlow | Encryption Decoded</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Playfair Display for Serifs, Geist (Inter/Sans fallback), JetBrains Mono for Code -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#d8c3b4",
+                        "surface-dim": "#dbdad6",
+                        "surface-container": "#efeeea",
+                        "tertiary": "#5b5c5c",
+                        "on-primary-fixed": "#2e1500",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#30312e",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-tertiary-fixed-variant": "#464747",
+                        "background": "#fbf9f5",
+                        "on-surface": "#1b1c1a",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#e3e2e2",
+                        "secondary": "#436086",
+                        "surface-variant": "#e4e2de",
+                        "on-primary-fixed-variant": "#6d3a00",
+                        "on-primary-container": "#fffbff",
+                        "surface-bright": "#fbf9f5",
+                        "on-secondary-container": "#3c597f",
+                        "on-background": "#1b1c1a",
+                        "primary-fixed": "#ffdcc2",
+                        "outline": "#857467",
+                        "inverse-on-surface": "#f2f0ed",
+                        "surface": "#fbf9f5",
+                        "surface-tint": "#8c4f10",
+                        "primary-fixed-dim": "#ffb77b",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#eae8e4",
+                        "primary": "#894d0d",
+                        "surface-container-low": "#f5f3ef",
+                        "on-secondary-fixed-variant": "#2a486d",
+                        "inverse-primary": "#ffb77b",
+                        "secondary-container": "#b3d1fd",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001c39",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#747575",
+                        "secondary-fixed": "#d3e3ff",
+                        "primary-container": "#a76526",
+                        "surface-container-highest": "#e4e2de",
+                        "on-tertiary-container": "#fdfcfc",
+                        "secondary-fixed-dim": "#abc8f4",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#524439",
+                        "accent-teal": "#3c597f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "matrix-gap": "4px",
+                        "container-max": "1280px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "code-sm": ["JetBrains Mono"],
+                        "display-hero": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display-hero-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "code-sm": ["14px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "display-hero": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "body-lg": ["20px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.08em", "fontWeight": "600"}],
+                        "display-hero-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #FDFBF7; /* Warm cream background as requested */
+            color: #1b1c1a;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .editorial-shadow {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+        }
+    </style>
+</head>
+<body class="font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md">
+<nav class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-20">
+<div class="font-headline-md text-headline-md font-bold text-on-background dark:text-on-background tracking-tight">
+                CipherFlow
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary dark:text-primary-fixed border-b-2 border-primary pb-1 font-body-lg text-body-lg" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary font-body-lg text-body-lg transition-colors" href="#">How It Works</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary font-body-lg text-body-lg transition-colors" href="#">Simulator</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:opacity-80 transition-opacity">lock</button>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label-caps text-label-caps hover:opacity-90 transition-all active:scale-95">
+                    Try Simulator
+                </button>
+</div>
+</nav>
+</header>
+<main class="pt-32 pb-24">
+<!-- Hero Section -->
+<section class="max-w-container-max mx-auto px-gutter text-center">
+<div class="max-w-4xl mx-auto mb-16">
+<span class="inline-block px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps mb-8 reveal-up">
+                    ACADEMIC VISUALIZATION ENGINE
+                </span>
+<h1 class="font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface mb-8 leading-tight reveal-up">
+                    Encryption Used to be a <br class="hidden md:block"/>Black Box.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12 max-w-2xl mx-auto reveal-up">
+                    See exactly how AES-128 transforms data, one round at a time. Explore the mathematical choreography of bits and bytes in stunning clarity.
+                </p>
+<div class="reveal-up">
+<button class="bg-accent-teal text-white px-10 py-4 rounded-full font-body-lg text-body-lg font-semibold hover:brightness-110 shadow-lg shadow-secondary/20 transition-all active:scale-95">
+                        Mulai Simulasi
+                    </button>
+</div>
+</div>
+<!-- Hero Image Visual -->
+<div class="relative w-full max-w-5xl mx-auto reveal-up">
+<div class="aspect-[16/9] rounded-xl overflow-hidden shadow-2xl editorial-shadow bg-surface-container-low border border-white/40">
+<img class="w-full h-full object-cover" data-alt="A professional and artistic 3D visualization of the AES encryption process featuring a flowing metallic ribbon of bronze and silver textures. Binary data streams shimmer on the surface of the ribbon as it bridges two glowing glass orbs. One orb contains an unlocked padlock icon labeled Plaintext, while the other contains a locked padlock icon labeled Ciphertext. The overall atmosphere is sophisticated, academic, and minimalist with soft, warm gallery lighting on a pristine cream background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmj-5NZtgtGA3mm-Xk78VA3uoGVM_omF4buk04Ywt12ljyMPZxfPr-bBv8iiLQGDPWGVq3heilFoHMdNQhB_QmF9Vj4LwANzmW87zk1LagyjU0KNwKaCvhKJK1j_Wnz2wgf9dvnhfkU2jpoDgblG8YI28D_vJjDbZ8d3qbwcrJw4_xhGt7Yy7xb6QDoIjeX8ivVhWO0SO_WFW8HCbtu2sTiKdVh7gzwYZLPRH6Or0AHcXsvNaXlxIBqKtgQh5IIEd6gU_Oyg0MIzv9"/>
+</div>
+<!-- Floating Decorative Element -->
+<div class="absolute -bottom-10 -right-10 hidden md:block w-48 h-48 bg-primary-fixed rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+<div class="absolute -top-10 -left-10 hidden md:block w-48 h-48 bg-secondary-fixed rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+</div>
+</section>
+<!-- Academic Features Section -->
+<section class="max-w-container-max mx-auto px-gutter mt-40">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="reveal-up p-8 rounded-lg bg-surface-container-lowest border border-outline-variant/30">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-6">
+<span class="material-symbols-outlined">layers</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4">Step-by-Step Rounds</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Visualize all 10 rounds of AES-128, from the initial Key Expansion to the final Ciphertext output.
+                    </p>
+</div>
+<div class="reveal-up p-8 rounded-lg bg-surface-container-lowest border border-outline-variant/30">
+<div class="w-12 h-12 rounded-full bg-primary-fixed text-primary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined">grid_4x4</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4">Matrix Transformations</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Interact with the 4x4 State Matrix. Watch SubBytes, ShiftRows, and MixColumns happen in real-time.
+                    </p>
+</div>
+<div class="reveal-up p-8 rounded-lg bg-surface-container-lowest border border-outline-variant/30">
+<div class="w-12 h-12 rounded-full bg-surface-variant text-tertiary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4">Hex Transparency</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        No hidden calculations. Hover over any cell to see the underlying hexadecimal and binary transformations.
+                    </p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-background border-t border-outline-variant dark:border-outline-variant">
+<div class="w-full py-gutter px-gutter flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto font-body-md text-body-md text-on-background">
+<div class="mb-4 md:mb-0">
+<span class="font-headline-md text-headline-md text-primary font-bold mr-4">CipherFlow</span>
+<span class="text-on-surface-variant">© 2024 CipherFlow Academic. Engineered for cryptographic clarity.</span>
+</div>
+<div class="flex gap-8">
+<a class="text-on-surface-variant hover:text-on-surface hover:underline decoration-primary underline-offset-4 transition-all" href="#">Documentation</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:underline decoration-primary underline-offset-4 transition-all" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:underline decoration-primary underline-offset-4 transition-all" href="#">GitHub</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Intersection Observer for reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-up').forEach((el, index) => {
+            el.style.transitionDelay = `${index * 100}ms`;
+            observer.observe(el);
+        });
+
+        // Hover Micro-interaction for the CTA button
+        const ctaBtn = document.querySelector('.bg-accent-teal');
+        ctaBtn.addEventListener('mousemove', (e) => {
+            const rect = ctaBtn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            ctaBtn.style.setProperty('--mouse-x', `${x}px`);
+            ctaBtn.style.setProperty('--mouse-y', `${y}px`);
+        });
+    </script>
+</body></html>

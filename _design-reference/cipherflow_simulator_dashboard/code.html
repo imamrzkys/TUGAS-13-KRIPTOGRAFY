@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CipherFlow | AES-128 Simulator Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://api.fontshare.com/v2/css?f[]=geist@400,500,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "outline-variant": "#d8c3b4",
+                "surface-dim": "#dbdad6",
+                "surface-container": "#efeeea",
+                "tertiary": "#5b5c5c",
+                "on-primary-fixed": "#2e1500",
+                "on-error": "#ffffff",
+                "inverse-surface": "#30312e",
+                "on-tertiary-fixed": "#1a1c1c",
+                "on-tertiary-fixed-variant": "#464747",
+                "background": "#fbf9f5",
+                "on-surface": "#1b1c1a",
+                "error-container": "#ffdad6",
+                "tertiary-fixed": "#e3e2e2",
+                "secondary": "#436086",
+                "surface-variant": "#e4e2de",
+                "on-primary-fixed-variant": "#6d3a00",
+                "on-primary-container": "#fffbff",
+                "surface-bright": "#fbf9f5",
+                "on-secondary-container": "#3c597f",
+                "on-background": "#1b1c1a",
+                "primary-fixed": "#ffdcc2",
+                "outline": "#857467",
+                "inverse-on-surface": "#f2f0ed",
+                "surface": "#fbf9f5",
+                "surface-tint": "#8c4f10",
+                "primary-fixed-dim": "#ffb77b",
+                "tertiary-fixed-dim": "#c6c6c6",
+                "on-error-container": "#93000a",
+                "surface-container-high": "#eae8e4",
+                "primary": "#894d0d",
+                "surface-container-low": "#f5f3ef",
+                "on-secondary-fixed-variant": "#2a486d",
+                "inverse-primary": "#ffb77b",
+                "secondary-container": "#b3d1fd",
+                "on-primary": "#ffffff",
+                "on-secondary-fixed": "#001c39",
+                "on-tertiary": "#ffffff",
+                "on-secondary": "#ffffff",
+                "surface-container-lowest": "#ffffff",
+                "tertiary-container": "#747575",
+                "secondary-fixed": "#d3e3ff",
+                "primary-container": "#a76526",
+                "surface-container-highest": "#e4e2de",
+                "on-tertiary-container": "#fdfcfc",
+                "secondary-fixed-dim": "#abc8f4",
+                "error": "#ba1a1a",
+                "on-surface-variant": "#524439"
+            },
+            "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "matrix-gap": "4px",
+                "container-max": "1280px",
+                "unit": "8px",
+                "margin-mobile": "16px",
+                "gutter": "24px"
+            },
+            "fontFamily": {
+                "code-sm": ["JetBrains Mono"],
+                "display-hero": ["Playfair Display"],
+                "body-md": ["Geist"],
+                "headline-md": ["Playfair Display"],
+                "body-lg": ["Geist"],
+                "label-caps": ["Geist"],
+                "display-hero-mobile": ["Playfair Display"]
+            },
+            "fontSize": {
+                "code-sm": ["14px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                "display-hero": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "display-hero-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Geist', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .matrix-cell {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .matrix-cell:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-background h-20 flex items-center">
+<div class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-20">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-on-background">CipherFlow</span>
+<div class="hidden md:flex gap-6">
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-primary transition-opacity duration-200" href="#">Home</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-primary transition-opacity duration-200" href="#">How It Works</a>
+<a class="font-body-lg text-body-lg text-primary border-b-2 border-primary pb-1" href="#">Simulator</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity">lock</button>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-body-md hover:opacity-90 active:scale-95 transition-all">
+                    Try Simulator
+                </button>
+</div>
+</div>
+</nav>
+<div class="flex flex-1 pt-20">
+<!-- SideNavBar -->
+<aside class="hidden md:flex fixed left-0 top-20 h-[calc(100vh-80px)] w-64 bg-surface-container-low flex-col py-margin-mobile overflow-y-auto hide-scrollbar">
+<div class="px-6 mb-8">
+<h3 class="font-headline-md text-headline-md text-on-surface">AES Rounds</h3>
+<p class="text-on-surface-variant text-label-caps uppercase tracking-wider">Process Sequence</p>
+</div>
+<div class="flex flex-col gap-1">
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">vpn_key</span>
+<span class="font-label-caps">Key Expansion</span>
+</button>
+<!-- Active Tab: Initial Round -->
+<button class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-full mx-2 translate-x-1 transition-transform duration-150">
+<span class="material-symbols-outlined">start</span>
+<span class="font-label-caps">Initial Round</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">looks_one</span>
+<span class="font-label-caps">Round 1</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">looks_two</span>
+<span class="font-label-caps">Round 2</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">looks_3</span>
+<span class="font-label-caps">Round 3</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">looks_4</span>
+<span class="font-label-caps">Round 4</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">looks_5</span>
+<span class="font-label-caps">Round 5</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">looks_6</span>
+<span class="font-label-caps">Round 6</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">looks_3</span>
+<span class="font-label-caps">Round 7</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">looks_3</span>
+<span class="font-label-caps">Round 8</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">looks_3</span>
+<span class="font-label-caps">Round 9</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-full mx-2 transition-colors">
+<span class="material-symbols-outlined">done_all</span>
+<span class="font-label-caps">Round 10</span>
+</button>
+</div>
+<div class="mt-auto px-6 py-4">
+<button class="w-full text-secondary font-label-caps hover:underline text-left">
+                    Show calculation details
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-gutter overflow-x-hidden">
+<div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Pane: Input Form Card -->
+<div class="lg:col-span-4 space-y-gutter">
+<div class="bg-surface-container-lowest p-gutter rounded-lg shadow-sm border border-outline-variant/30">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">Configuration</h2>
+<div class="flex bg-surface-container-high rounded-full p-1">
+<button class="px-4 py-1 text-label-caps bg-surface-container-lowest rounded-full shadow-sm">Encrypt</button>
+<button class="px-4 py-1 text-label-caps text-on-surface-variant hover:opacity-70 transition-opacity">Decrypt</button>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Plaintext Field -->
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="text-label-caps text-on-surface-variant">Plaintext</label>
+<div class="flex gap-2 text-label-caps text-primary cursor-pointer hover:underline">
+<span>TEXT</span> | <span>HEX</span>
+</div>
+</div>
+<input class="w-full bg-surface-container-low border-none border-b-2 border-transparent focus:ring-0 focus:border-primary transition-all p-3 font-body-md rounded-md" placeholder="Enter plaintext..." type="text" value="CipherFlow Academic"/>
+</div>
+<!-- Key Field -->
+<div>
+<label class="block text-label-caps text-on-surface-variant mb-2">Secret Key (32-char Hex)</label>
+<input class="w-full bg-surface-container-low border-none border-b-2 border-transparent focus:ring-0 focus:border-secondary transition-all p-3 font-code-sm rounded-md tracking-wider" placeholder="000102030405060708090a0b0c0d0e0f" type="text"/>
+</div>
+<!-- Buttons -->
+<div class="flex flex-col gap-3 pt-4">
+<button class="w-full py-4 bg-secondary text-on-secondary rounded-full font-body-lg font-semibold tracking-widest hover:opacity-90 active:scale-[0.98] transition-all shadow-lg shadow-secondary/20">
+                                    ENCRYPT
+                                </button>
+<button class="w-full py-3 border-2 border-outline-variant text-on-surface-variant rounded-full font-label-caps hover:bg-surface-variant/20 transition-all">
+                                    RESET
+                                </button>
+</div>
+<!-- Output Field -->
+<div class="mt-8 pt-8 border-t border-outline-variant/30">
+<label class="block text-label-caps text-on-surface-variant mb-2">Result Ciphertext</label>
+<div class="relative group">
+<div class="w-full bg-surface-container-high p-4 rounded-lg font-code-sm text-on-surface min-h-[60px] break-all leading-relaxed">
+                                        32 8A FF 4D C2 10 93 A1 0F 42 B7 65 26 A7 0D 89
+                                    </div>
+<button class="absolute top-3 right-3 material-symbols-outlined text-secondary opacity-50 group-hover:opacity-100 transition-opacity">content_copy</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Informational Tip -->
+<div class="bg-primary-container/10 p-gutter rounded-lg border-l-4 border-primary">
+<h4 class="font-body-md font-bold text-primary mb-1">Laboratory Insight</h4>
+<p class="text-body-md text-on-surface-variant">The initial round adds the subkey to the state array using a bitwise XOR operation. This ensures that every bit of the cipher depends on the key from the very start.</p>
+</div>
+</div>
+<!-- Main area: State Matrix -->
+<div class="lg:col-span-8 flex flex-col items-center justify-start py-8">
+<div class="w-full max-w-2xl bg-surface-container p-gutter rounded-xl shadow-xl relative overflow-hidden">
+<!-- Subtle Background Pattern -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#894d0d 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="flex justify-between items-center mb-10 relative z-10">
+<div>
+<span class="bg-secondary text-on-secondary px-4 py-1 rounded-full text-label-caps">ROUND 0</span>
+<h2 class="font-headline-md text-headline-md mt-2 text-on-surface">Initial State Matrix</h2>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" title="Expand Details">unfold_more</button>
+</div>
+<!-- 4x4 Grid -->
+<div class="grid grid-cols-4 gap-matrix-gap bg-outline-variant/20 p-matrix-gap rounded-lg shadow-inner relative z-10">
+<!-- Row 1 -->
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">32</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">8A</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">FF</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">4D</span>
+</div>
+<!-- Row 2 -->
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">C2</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">10</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">93</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">A1</span>
+</div>
+<!-- Row 3 -->
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">0F</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">42</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">B7</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">65</span>
+</div>
+<!-- Row 4 -->
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">26</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">A7</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">0D</span>
+</div>
+<div class="matrix-cell aspect-square flex items-center justify-center bg-surface-container-lowest rounded-md shadow-sm border border-outline-variant/10">
+<span class="font-code-sm text-2xl text-on-surface">89</span>
+</div>
+</div>
+<div class="mt-8 flex justify-center gap-4 relative z-10">
+<button class="flex items-center gap-2 px-6 py-2 rounded-full border-2 border-outline text-outline font-label-caps hover:bg-outline hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-base">arrow_back</span>
+                                Previous Step
+                            </button>
+<button class="flex items-center gap-2 px-8 py-2 rounded-full bg-primary text-on-primary font-label-caps shadow-md hover:shadow-lg transition-all">
+                                Next Step (SubBytes)
+                                <span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Floating Tooltip Context -->
+<div class="mt-12 w-full max-w-2xl bg-surface-container-low/50 backdrop-blur-md p-6 rounded-lg border border-outline-variant/20 flex gap-4">
+<div class="bg-secondary/10 p-3 rounded-full self-start">
+<span class="material-symbols-outlined text-secondary">info</span>
+</div>
+<div>
+<p class="font-body-md text-on-surface leading-relaxed">
+<strong class="text-secondary">Did you know?</strong> In the Initial Round (AddRoundKey), the state is combined with the main key using bitwise XOR. This is the only round that uses the original key directly before it gets transformed by the key schedule.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full py-gutter px-gutter bg-background border-t border-outline-variant flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto mt-auto">
+<div class="mb-4 md:mb-0">
+<p class="font-body-md text-body-md text-on-background">© 2024 <span class="font-bold text-primary">CipherFlow Academic</span>. Engineered for cryptographic clarity.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:underline decoration-primary underline-offset-4 transition-opacity" href="#">Documentation</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:underline decoration-primary underline-offset-4 transition-opacity" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:underline decoration-primary underline-offset-4 transition-opacity" href="#">GitHub</a>
+</div>
+</footer>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('.matrix-cell').forEach(cell => {
+            cell.addEventListener('mouseenter', () => {
+                cell.style.backgroundColor = '#ffdcc2'; // primary-fixed
+                cell.style.borderColor = '#8c4f10'; // surface-tint
+            });
+            cell.addEventListener('mouseleave', () => {
+                cell.style.backgroundColor = '#ffffff'; // surface-container-lowest
+                cell.style.borderColor = 'rgba(216, 195, 180, 0.1)'; // outline-variant/10
+            });
+        });
+
+        // Toggle logic simulation for Encrypt/Decrypt
+        const modeButtons = document.querySelectorAll('.bg-surface-container-high button');
+        modeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modeButtons.forEach(b => {
+                    b.classList.remove('bg-surface-container-lowest', 'shadow-sm');
+                    b.classList.add('text-on-surface-variant');
+                });
+                btn.classList.add('bg-surface-container-lowest', 'shadow-sm');
+                btn.classList.remove('text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

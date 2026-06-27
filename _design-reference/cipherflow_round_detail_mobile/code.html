@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CipherFlow - Round Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Geist:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#eae8e4",
+                    "secondary-fixed-dim": "#abc8f4",
+                    "on-background": "#1b1c1a",
+                    "inverse-surface": "#30312e",
+                    "inverse-primary": "#ffb77b",
+                    "on-primary-fixed": "#2e1500",
+                    "surface-container-highest": "#e4e2de",
+                    "surface-container": "#efeeea",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#8c4f10",
+                    "secondary": "#436086",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "on-surface": "#1b1c1a",
+                    "on-primary-fixed-variant": "#6d3a00",
+                    "background": "#fbf9f5",
+                    "tertiary-container": "#747575",
+                    "surface-bright": "#fbf9f5",
+                    "tertiary-fixed": "#e3e2e2",
+                    "on-error-container": "#93000a",
+                    "surface-container-low": "#f5f3ef",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface": "#fbf9f5",
+                    "on-tertiary-fixed-variant": "#464747",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "on-tertiary-container": "#fdfcfc",
+                    "secondary-container": "#b3d1fd",
+                    "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#ffb77b",
+                    "on-secondary-container": "#3c597f",
+                    "on-secondary-fixed": "#001c39",
+                    "primary": "#894d0d",
+                    "inverse-on-surface": "#f2f0ed",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#524439",
+                    "tertiary": "#5b5c5c",
+                    "surface-dim": "#dbdad6",
+                    "on-secondary-fixed-variant": "#2a486d",
+                    "error-container": "#ffdad6",
+                    "outline": "#857467",
+                    "on-primary-container": "#fffbff",
+                    "primary-fixed": "#ffdcc2",
+                    "primary-container": "#a76526",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#d8c3b4",
+                    "surface-variant": "#e4e2de",
+                    "secondary-fixed": "#d3e3ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "matrix-gap": "4px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-hero-mobile": ["Playfair Display"],
+                    "display-hero": ["Playfair Display"],
+                    "label-caps": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "body-md": ["Geist"],
+                    "headline-md": ["Playfair Display"],
+                    "code-sm": ["JetBrains Mono"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .matrix-cell {
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-open .accordion-content {
+            max-height: 500px;
+        }
+        .accordion-open .chevron-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection:bg-secondary-container selection:text-on-secondary-container min-h-screen pb-32">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<nav class="flex justify-between items-center px-4 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md font-bold text-primary">CipherFlow</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button class="bg-primary text-on-primary px-5 py-2 rounded-full font-label-caps transition-transform active:scale-95">
+                    Try Simulator
+                </button>
+</div>
+</nav>
+</header>
+<main class="px-4 py-8 max-w-lg mx-auto">
+<!-- Header Info -->
+<div class="mb-8 text-center">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-caps mb-4">
+<span class="material-symbols-outlined text-[18px]">looks_one</span>
+<span>Round 1 - SubBytes</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface">Transformation Logic</h1>
+<p class="font-body-md text-on-surface-variant mt-2">Observing the state matrix evolution through the S-Box substitution phase.</p>
+</div>
+<!-- Matrix Flow (Vertical Stack) -->
+<div class="flex flex-col items-center gap-8 mb-12">
+<!-- Input State -->
+<section class="w-full">
+<h3 class="font-label-caps text-outline mb-4 text-center">Input State</h3>
+<div class="grid grid-cols-4 gap-[4px] p-[4px] bg-outline-variant rounded-lg overflow-hidden shadow-sm">
+<!-- Column 1 -->
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">63</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">2F</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">AF</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">A2</div>
+<!-- Column 2 -->
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">EB</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">93</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">C7</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">12</div>
+<!-- Column 3 -->
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">9F</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">92</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">AB</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">59</div>
+<!-- Column 4 -->
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">A0</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">C0</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">34</div>
+<div class="matrix-cell bg-surface-container-lowest font-code-sm text-code-sm">88</div>
+</div>
+</section>
+<!-- Down Arrow -->
+<div class="flex flex-col items-center">
+<div class="h-8 w-[2px] bg-outline-variant"></div>
+<div class="p-3 rounded-full bg-primary text-on-primary shadow-lg ring-4 ring-surface">
+<span class="material-symbols-outlined block">arrow_downward</span>
+</div>
+<div class="h-8 w-[2px] bg-outline-variant"></div>
+</div>
+<!-- Substituted State -->
+<section class="w-full">
+<h3 class="font-label-caps text-outline mb-4 text-center">Substituted State</h3>
+<div class="grid grid-cols-4 gap-[4px] p-[4px] bg-outline-variant rounded-lg overflow-hidden shadow-md ring-2 ring-primary/20">
+<!-- Column 1 (Transformed) -->
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">FB</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">15</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">79</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">3A</div>
+<!-- Column 2 (Transformed) -->
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">E9</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">DC</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">C6</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">C9</div>
+<!-- Column 3 (Transformed) -->
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">DB</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">4F</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">62</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">CB</div>
+<!-- Column 4 (Transformed) -->
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">E0</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">BA</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">18</div>
+<div class="matrix-cell bg-primary-fixed text-on-primary-fixed-variant font-code-sm text-code-sm font-bold">C4</div>
+</div>
+</section>
+</div>
+<!-- Accordion Operations -->
+<div class="space-y-3">
+<!-- Accordion 1 -->
+<div class="rounded-xl border border-outline-variant bg-surface-container-low transition-all" onclick="toggleAccordion(this)">
+<button class="w-full flex items-center justify-between p-4 focus:outline-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">grid_view</span>
+<span class="font-label-caps text-on-surface">SubBytes</span>
+</div>
+<span class="material-symbols-outlined chevron-icon transition-transform duration-300">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="p-4 pt-0 text-on-surface-variant font-body-md border-t border-outline-variant/30 mt-2">
+                        Each byte in the state matrix is replaced with a corresponding byte from the Rijndael S-Box. This provides non-linearity in the cipher.
+                        <div class="mt-4 p-3 bg-surface-container rounded-lg font-code-sm text-[12px]">
+                            lookup(0x63) -&gt; 0xFB
+                        </div>
+</div>
+</div>
+</div>
+<!-- Accordion 2 -->
+<div class="rounded-xl border border-outline-variant bg-surface-container-low transition-all" onclick="toggleAccordion(this)">
+<button class="w-full flex items-center justify-between p-4 focus:outline-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">format_list_bulleted</span>
+<span class="font-label-caps text-on-surface">ShiftRows</span>
+</div>
+<span class="material-symbols-outlined chevron-icon transition-transform duration-300">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="p-4 pt-0 text-on-surface-variant font-body-md border-t border-outline-variant/30 mt-2">
+                        The last three rows of the state are shifted cyclically a certain number of steps. This ensures that the columns are mixed in the long run.
+                    </div>
+</div>
+</div>
+<!-- Accordion 3 -->
+<div class="rounded-xl border border-outline-variant bg-surface-container-low transition-all" onclick="toggleAccordion(this)">
+<button class="w-full flex items-center justify-between p-4 focus:outline-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">opacity</span>
+<span class="font-label-caps text-on-surface">MixColumns</span>
+</div>
+<span class="material-symbols-outlined chevron-icon transition-transform duration-300">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="p-4 pt-0 text-on-surface-variant font-body-md border-t border-outline-variant/30 mt-2">
+                        Each column of the state is multiplied by a fixed polynomial. This operation provides diffusion in the cipher.
+                    </div>
+</div>
+</div>
+<!-- Accordion 4 -->
+<div class="rounded-xl border border-outline-variant bg-surface-container-low transition-all" onclick="toggleAccordion(this)">
+<button class="w-full flex items-center justify-between p-4 focus:outline-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">vpn_key</span>
+<span class="font-label-caps text-on-surface">AddRoundKey</span>
+</div>
+<span class="material-symbols-outlined chevron-icon transition-transform duration-300">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="p-4 pt-0 text-on-surface-variant font-body-md border-t border-outline-variant/30 mt-2">
+                        A round key is combined with the state. For each round, a subkey is derived from the main key using the AES key schedule.
+                    </div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Controls -->
+<div class="fixed bottom-6 left-0 right-0 px-6 z-40 pointer-events-none">
+<div class="max-w-md mx-auto flex items-center justify-between pointer-events-auto bg-surface-container-highest/90 backdrop-blur-xl p-4 rounded-full shadow-2xl border border-white/20">
+<button class="flex items-center gap-2 px-6 py-3 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant hover:bg-surface transition-colors active:scale-95 group">
+<span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform">arrow_back</span>
+<span class="font-label-caps">Initial</span>
+</button>
+<div class="flex flex-col items-center">
+<span class="font-label-caps text-[10px] text-outline uppercase tracking-widest">Progress</span>
+<div class="flex gap-1 mt-1">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+</div>
+</div>
+<button class="flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-on-primary shadow-lg shadow-primary/20 hover:bg-primary-container transition-colors active:scale-95 group">
+<span class="font-label-caps">Round 2</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Footer Documentation Link -->
+<footer class="mt-20 pb-10 px-6 text-center border-t border-outline-variant pt-8">
+<p class="font-label-sm text-outline mb-4">© 2024 CipherFlow Academic. All Rights Reserved.</p>
+<div class="flex justify-center gap-6">
+<a class="font-label-sm text-outline hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="font-label-sm text-outline hover:text-primary transition-colors" href="#">Methodology</a>
+<a class="font-label-sm text-outline hover:text-primary transition-colors" href="#">Privacy</a>
+</div>
+</footer>
+<script>
+        function toggleAccordion(element) {
+            // Close other accordions
+            const accordions = document.querySelectorAll('.rounded-xl.border-outline-variant');
+            accordions.forEach(acc => {
+                if (acc !== element) {
+                    acc.classList.remove('accordion-open', 'bg-surface-container-highest', 'ring-2', 'ring-primary/10');
+                }
+            });
+
+            // Toggle current
+            const isOpen = element.classList.contains('accordion-open');
+            if (isOpen) {
+                element.classList.remove('accordion-open', 'bg-surface-container-highest', 'ring-2', 'ring-primary/10');
+            } else {
+                element.classList.add('accordion-open', 'bg-surface-container-highest', 'ring-2', 'ring-primary/10');
+            }
+        }
+
+        // Auto-open first accordion for demonstration
+        window.addEventListener('DOMContentLoaded', () => {
+            const firstAcc = document.querySelector('.rounded-xl');
+            if (firstAcc) toggleAccordion(firstAcc);
+        });
+    </script>
+</body></html>

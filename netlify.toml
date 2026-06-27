@@ -1,0 +1,25 @@
+// AES-128 CipherFlow Simulator — Netlify deploy config
+// Handles SPA (Single Page Application) routing on Netlify
+// All routes redirect to index.html so React Router handles them.
+
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
+  status = 200
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
