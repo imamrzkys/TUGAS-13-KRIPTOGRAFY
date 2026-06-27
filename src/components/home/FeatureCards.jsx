@@ -4,20 +4,20 @@ export default function FeatureCards() {
   const features = [
     {
       icon: 'layers',
-      title: 'Step-by-step Rounds',
-      description: 'Visualize all 10 rounds of AES-128, from the initial Key Expansion to the final Ciphertext output.',
+      title: 'Ronde Langkah-demi-Langkah',
+      description: 'Visualisasikan seluruh 10 ronde AES-128, dari Key Expansion awal hingga hasil Ciphertext akhir.',
       iconColor: 'bg-[#dbeafe] text-[#2563eb] dark:bg-[#1e3a8a]/40 dark:text-[#60a5fa]'
     },
     {
       icon: 'grid_on',
-      title: 'Matrix Transformations',
-      description: 'Interact with the 4x4 State Matrix. Watch SubBytes, ShiftRows, and MixColumns happen in real-time.',
+      title: 'Transformasi Matriks',
+      description: 'Berinteraksi langsung dengan State Matrix 4×4. Amati SubBytes, ShiftRows, dan MixColumns berlangsung secara real-time.',
       iconColor: 'bg-[#ffedd5] text-[#d97706] dark:bg-[#7c2d12]/40 dark:text-[#fb923c]'
     },
     {
       icon: 'terminal',
-      title: 'Hex Transparency',
-      description: 'No hidden calculations. Hover over any cell to see the underlying hexadecimal and binary transformations.',
+      title: 'Transparansi Heksadesimal',
+      description: 'Tidak ada perhitungan yang disembunyikan. Arahkan kursor ke tiap sel untuk melihat transformasi heksadesimal dan biner di baliknya.',
       iconColor: 'bg-[#f1f5f9] text-[#475569] dark:bg-[#334155]/40 dark:text-[#94a3b8]'
     }
   ];

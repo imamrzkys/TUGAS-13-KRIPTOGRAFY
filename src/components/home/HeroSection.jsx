@@ -35,7 +35,7 @@ export default function HeroSection() {
         <motion.div variants={itemVariants} className="inline-block">
           <div className="inline-flex items-center px-4 py-1.5 bg-[#eae8e4] dark:bg-[#2e2927] rounded-full border border-outline-variant/40">
             <span className="text-[10px] sm:text-xs font-bold text-on-surface-variant tracking-[0.18em] uppercase">
-              Academic Visualization Engine
+              Mesin Visualisasi Akademik
             </span>
           </div>
         </motion.div>
@@ -45,7 +45,7 @@ export default function HeroSection() {
           variants={itemVariants}
           className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-on-background leading-[1.1] max-w-4xl mx-auto"
         >
-          Encryption Used to be a<br className="hidden sm:inline" /> Black Box.
+          Enkripsi Dulunya Sebuah<br className="hidden sm:inline" /> Kotak Hitam.
         </motion.h1>
 
         {/* Subtitle */}
@@ -53,8 +53,8 @@ export default function HeroSection() {
           variants={itemVariants}
           className="text-base sm:text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed"
         >
-          See exactly how AES-128 transforms data, one round at a time.
-          Explore the mathematical choreography of bits and bytes in stunning clarity.
+          Amati bagaimana AES-128 mentransformasi data, ronde demi ronde.
+          Telusuri koreografi matematis bit dan byte dengan kejelasan visual yang mendalam.
         </motion.p>
 
         {/* CTA Button - Mulai Simulasi */}

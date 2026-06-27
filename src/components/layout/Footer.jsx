@@ -12,17 +12,17 @@ export default function Footer() {
             </span>
             <span className="hidden sm:inline text-on-surface-variant/40">|</span>
             <span className="text-[11px] sm:text-xs">
-              © 2024 CipherFlow Academic. Engineered for cryptographic clarity.
+              © 2024 CipherFlow Academic. Dirancang untuk kejelasan kriptografis.
             </span>
           </div>
 
           {/* Action Links */}
           <div className="flex items-center gap-6">
             <Link to="/how-it-works" className="hover:text-on-surface transition-colors">
-              Documentation
+              Dokumentasi
             </Link>
             <a href="#" className="hover:text-on-surface transition-colors">
-              Privacy Policy
+              Kebijakan Privasi
             </a>
             <a href="#" className="hover:text-on-surface transition-colors">
               GitHub
