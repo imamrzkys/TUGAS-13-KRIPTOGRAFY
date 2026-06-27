@@ -86,7 +86,7 @@ export default function HeroSection() {
         <div className="h-[90px] sm:h-[130px] md:h-[160px] flex items-center justify-center overflow-hidden">
           <motion.h1
             variants={itemVariants}
-            className="font-display text-3xl sm:text-5xl md:text-6xl font-bold text-on-background leading-[1.2] max-w-4xl mx-auto"
+            className="m-0 p-0 font-display text-3xl sm:text-5xl md:text-6xl font-bold text-on-background leading-[1.2] max-w-4xl mx-auto"
           >
             <span>{currentText}</span>
             <span className="inline-block text-primary animate-pulse font-normal ml-1 select-none">|</span>
