@@ -216,6 +216,18 @@ export default function Simulator() {
                               <StateMatrix
                                 matrix={matrices.after}
                                 title="State Tersubstitusi (SESUDAH)"
+                                highlightIndices={(() => {
+                                  if (!matrices.before || !matrices.after) return [];
+                                  const diff = [];
+                                  for (let r = 0; r < 4; r++) {
+                                    for (let c = 0; c < 4; c++) {
+                                      if (matrices.before[r][c] !== matrices.after[r][c]) {
+                                        diff.push([r, c]);
+                                      }
+                                    }
+                                  }
+                                  return diff;
+                                })()}
                                 glowClass={glowClass}
                               />
                             </div>
