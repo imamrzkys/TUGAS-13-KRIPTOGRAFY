@@ -24,7 +24,7 @@ export default function Footer() {
             <a href="#" className="hover:text-on-surface transition-colors">
               Kebijakan Privasi
             </a>
-            <a href="#" className="hover:text-on-surface transition-colors">
+            <a href="https://github.com/imamrzkys/TUGAS-13-KRIPTOGRAFY" target="_blank" rel="noopener noreferrer" className="hover:text-on-surface transition-colors">
               GitHub
             </a>
           </div>
